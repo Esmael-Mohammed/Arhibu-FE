@@ -4,9 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Signup from "./pages/Auth/Signup";
 import Listings from "./pages/Listings/Listings";
-import Login from "./pages/Auth/Signup";
 import { Toaster, TooltipProvider } from "./components/ui/Toaster";
 import Onboarding from "./pages/Onbording/Onbording";
+import Login from "./pages/Auth/Login";
 
 const queryClient = new QueryClient();
 

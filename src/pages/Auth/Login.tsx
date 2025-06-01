@@ -36,11 +36,11 @@ const Login = () => {
       });
       
       navigate('/dashboard');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
       toast({
         title: "Login failed",
-        description: error.message || "Please check your credentials and try again.",
+        description: (error instanceof Error && error.message) ? error.message : "Please check your credentials and try again.",
         variant: "destructive",
       });
     } finally {
