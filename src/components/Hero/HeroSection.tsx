@@ -25,9 +25,9 @@ const HeroSection = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
                 <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-blue-700">
                   <option>Select Location</option>
-                  <option>New York</option>
-                  <option>Los Angeles</option>
-                  <option>Chicago</option>
+                  <option>Bole</option>
+                  <option>Kolfe Keranio</option>
+                  <option>Saris</option>
                 </select>
               </div>
               
@@ -43,9 +43,9 @@ const HeroSection = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Budget</label>
                 <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-blue-700">
                   <option>Select Budget</option>
-                  <option>$500-$1000</option>
-                  <option>$1000-$1500</option>
-                  <option>$1500-$2000</option>
+                  <option>500-1000 Birr</option>
+                  <option>1000-1500 Birr</option>
+                  <option>1500-2000 Birr</option>
                 </select>
               </div>
               

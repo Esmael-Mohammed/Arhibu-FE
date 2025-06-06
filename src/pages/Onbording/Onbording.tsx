@@ -1,54 +1,61 @@
-import { useState } from 'react';
-import { Home, ChevronLeft, ChevronRight, Upload } from 'lucide-react';
+import React, { useState } from 'react';
+import { Home, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Lable';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { Select } from '@/components/ui/Select'; // only import Select, no SelectTrigger etc.
 import Button from '@/components/ui/Button';
-import { Card, CardContent } from '@/components/ui/Card';
+import { Input } from '@/components/ui/Input';
+import Checkbox from '@/components/ui/Checkbox';
 import Textarea from '@/components/ui/Textarea';
+import { Card, CardContent } from '@/components/ui/Card';
+import { Label } from '@/components/ui/Lable';
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    // Personal Info
-    age: '',
-    occupation: '',
+    fullName: '',
+    email: '',
     phone: '',
-    bio: '',
-    
-    // Preferences
-    budget: '',
-    location: '',
-    roomType: '',
-    moveInDate: '',
-    leaseLength: '',
-    
-    // Lifestyle
-    cleanliness: '',
-    socialLevel: '',
-    sleepSchedule: '',
-    pets: '',
-    smoking: '',
-    drinking: '',
-    
-    // Profile Image
-    profileImage: null
+    houseLocation: '',
+    neighborhood: '',
+    totalBedrooms: '',
+    totalBathrooms: '',
+    apartmentType: '',
+    furniture: '',
+    amenities: {
+      runningWater: false,
+      electricity: false,
+      solarInverter: false,
+      swimmingPool: false,
+      washer: false,
+      kitchenCupboard: false,
+    },
+    houseDescription: '',
+    profileImage: null,
   });
-  
+
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
+    }));
+  };
+
+  const handleAmenityChange = (amenity: string, checked: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      amenities: {
+        ...prev.amenities,
+        [amenity]: checked,
+      },
     }));
   };
 
   const nextStep = () => {
-    if (currentStep < 4) {
+    if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -61,21 +68,19 @@ const Onboarding = () => {
 
   const handleSubmit = async () => {
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       toast({
-        title: "Profile created!",
-        description: "Welcome to Arhibu! You can now start browsing rooms.",
+        title: 'Profile created!',
+        description: 'Welcome to Arhibu! Your room listing is now active.',
       });
-      
+
       navigate('/dashboard');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
+    } catch {
       toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -85,250 +90,133 @@ const Onboarding = () => {
       case 1:
         return (
           <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Personal Information</h2>
-              <p className="text-gray-600">Tell us a bit about yourself</p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="age">Age</Label>
+                <Label htmlFor="fullName">Full Name</Label>
                 <Input
-                  id="age"
-                  type="number"
-                  placeholder="25"
-                  value={formData.age}
-                  onChange={(e) => handleChange('age', e.target.value)}
+                  id="fullName"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={(e) => handleChange('fullName', e.target.value)}
                 />
               </div>
-              
+
               <div className="space-y-2">
-                <Label htmlFor="occupation">Occupation</Label>
+                <Label htmlFor="email">Email Address</Label>
                 <Input
-                  id="occupation"
-                  placeholder="Software Engineer"
-                  value={formData.occupation}
-                  onChange={(e) => handleChange('occupation', e.target.value)}
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={(e) => handleChange('email', e.target.value)}
                 />
               </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                type="tel"
-                placeholder="+1 (555) 123-4567"
-                value={formData.phone}
-                onChange={(e) => handleChange('phone', e.target.value)}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="bio">Bio</Label>
-              <Textarea
-                id="bio"
-                placeholder="Tell potential roommates about yourself, your interests, and what you're looking for..."
-                value={formData.bio}
-                onChange={(e) => handleChange('bio', e.target.value)}
-                rows={8}
-              />
+
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={formData.phone}
+                  onChange={(e) => handleChange('phone', e.target.value)}
+                />
+              </div>
             </div>
           </div>
         );
-        
+
       case 2:
         return (
           <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Housing Preferences</h2>
-              <p className="text-gray-600">What are you looking for?</p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="budget">Monthly Budget</Label>
-                <Select value={formData.budget} onValueChange={(value) => handleChange('budget', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select budget range" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="under-500">Under $500</SelectItem>
-                    <SelectItem value="500-800">$500 - $800</SelectItem>
-                    <SelectItem value="800-1200">$800 - $1,200</SelectItem>
-                    <SelectItem value="1200-1500">$1,200 - $1,500</SelectItem>
-                    <SelectItem value="over-1500">Over $1,500</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="location">Preferred Location</Label>
+                <Label htmlFor="houseLocation">Where is the house located?</Label>
                 <Input
-                  id="location"
-                  placeholder="Downtown Seattle"
-                  value={formData.location}
-                  onChange={(e) => handleChange('location', e.target.value)}
+                  id="houseLocation"
+                  placeholder="House No. 5 Bole Street behind Dembel"
+                  value={formData.houseLocation}
+                  onChange={(e) => handleChange('houseLocation', e.target.value)}
                 />
               </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-4">
+
               <div className="space-y-2">
-                <Label htmlFor="roomType">Room Type</Label>
-                <Select value={formData.roomType} onValueChange={(value) => handleChange('roomType', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select room type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="shared">Shared Room</SelectItem>
-                    <SelectItem value="private">Private Room</SelectItem>
-                    <SelectItem value="studio">Studio</SelectItem>
-                    <SelectItem value="entire">Entire Place</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="moveInDate">Move-in Date</Label>
+                <Label htmlFor="neighborhood">What is the name of the area/neighborhood?</Label>
                 <Input
-                  id="moveInDate"
-                  type="date"
-                  value={formData.moveInDate}
-                  onChange={(e) => handleChange('moveInDate', e.target.value)}
+                  id="neighborhood"
+                  placeholder="Bole"
+                  value={formData.neighborhood}
+                  onChange={(e) => handleChange('neighborhood', e.target.value)}
                 />
               </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="leaseLength">Preferred Lease Length</Label>
-              <Select value={formData.leaseLength} onValueChange={(value) => handleChange('leaseLength', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select lease length" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="month-to-month">Month-to-month</SelectItem>
-                  <SelectItem value="3-months">3 months</SelectItem>
-                  <SelectItem value="6-months">6 months</SelectItem>
-                  <SelectItem value="12-months">12 months</SelectItem>
-                  <SelectItem value="longer">Longer than 12 months</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
           </div>
         );
-        
+
       case 3:
         return (
           <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Lifestyle Preferences</h2>
-              <p className="text-gray-600">Help us match you with compatible roommates</p>
-            </div>
-            
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="cleanliness">Cleanliness Level</Label>
-                <Select value={formData.cleanliness} onValueChange={(value) => handleChange('cleanliness', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select cleanliness level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="very-clean">Very Clean</SelectItem>
-                    <SelectItem value="moderately-clean">Moderately Clean</SelectItem>
-                    <SelectItem value="casual">Casual</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="totalBedrooms">Total Number of Bedrooms</Label>
+                <Input
+                  id="totalBedrooms"
+                  type="number"
+                  placeholder="Enter number"
+                  value={formData.totalBedrooms}
+                  onChange={(e) => handleChange('totalBedrooms', e.target.value)}
+                />
               </div>
-              
+
               <div className="space-y-2">
-                <Label htmlFor="socialLevel">Social Level</Label>
-                <Select value={formData.socialLevel} onValueChange={(value) => handleChange('socialLevel', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select social level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="very-social">Very Social</SelectItem>
-                    <SelectItem value="moderately-social">Moderately Social</SelectItem>
-                    <SelectItem value="quiet">Prefer Quiet</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="totalBathrooms">Total Number of Bathrooms</Label>
+                <Input
+                  id="totalBathrooms"
+                  type="number"
+                  placeholder="Enter number"
+                  value={formData.totalBathrooms}
+                  onChange={(e) => handleChange('totalBathrooms', e.target.value)}
+                />
               </div>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="sleepSchedule">Sleep Schedule</Label>
-                <Select value={formData.sleepSchedule} onValueChange={(value) => handleChange('sleepSchedule', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select sleep schedule" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="early-bird">Early Bird (before 10 PM)</SelectItem>
-                    <SelectItem value="normal">Normal (10 PM - 12 AM)</SelectItem>
-                    <SelectItem value="night-owl">Night Owl (after 12 AM)</SelectItem>
-                  </SelectContent>
+                <Label htmlFor="apartmentType">Apartment type</Label>
+                <Select
+                  id="apartmentType"
+                  value={formData.apartmentType}
+                  onValueChange={(value) => handleChange('apartmentType', value)}
+                  placeholder="Select apartment type"
+                >
+                  <option value="1-bedroom">1 bedroom</option>
+                  <option value="2-bedroom">2 bedroom</option>
+                  <option value="3-bedroom">3 bedroom</option>
+                  <option value="4-bedroom">4 bedroom</option>
+                  <option value="studio">Studio</option>
                 </Select>
               </div>
-              
+
               <div className="space-y-2">
-                <Label htmlFor="pets">Pets</Label>
-                <Select value={formData.pets} onValueChange={(value) => handleChange('pets', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pet preference" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="have-pets">I have pets</SelectItem>
-                    <SelectItem value="love-pets">Love pets (don't have)</SelectItem>
-                    <SelectItem value="allergic">Allergic to pets</SelectItem>
-                    <SelectItem value="no-preference">No preference</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="smoking">Smoking</Label>
-                <Select value={formData.smoking} onValueChange={(value) => handleChange('smoking', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Smoking preference" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="non-smoker">Non-smoker</SelectItem>
-                    <SelectItem value="occasional">Occasional</SelectItem>
-                    <SelectItem value="regular">Regular smoker</SelectItem>
-                    <SelectItem value="outside-only">Outside only</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="drinking">Drinking</Label>
-                <Select value={formData.drinking} onValueChange={(value) => handleChange('drinking', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Drinking preference" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="non-drinker">Non-drinker</SelectItem>
-                    <SelectItem value="social">Social drinker</SelectItem>
-                    <SelectItem value="regular">Regular drinker</SelectItem>
-                    <SelectItem value="no-preference">No preference</SelectItem>
-                  </SelectContent>
+                <Label htmlFor="furniture">Furniture</Label>
+                <Select
+                  id="furniture"
+                  value={formData.furniture}
+                  onValueChange={(value) => handleChange('furniture', value)}
+                  placeholder="Select furniture type"
+                >
+                  <option value="fully-furnished">Fully furnished</option>
+                  <option value="partially-furnished">Partially furnished</option>
+                  <option value="unfurnished">Unfurnished</option>
                 </Select>
               </div>
             </div>
           </div>
         );
-        
+
       case 4:
         return (
           <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Profile Photo</h2>
-              <p className="text-gray-600">Add a photo to make a great first impression</p>
-            </div>
-            
             <div className="text-center">
               <div className="w-32 h-32 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4">
                 <Upload className="w-8 h-8 text-gray-400" />
@@ -336,86 +224,122 @@ const Onboarding = () => {
               <Button variant="outline" className="mb-6">
                 Upload Photo
               </Button>
-              <p className="text-sm text-gray-600 mb-8">
-                This helps potential roommates get to know you better
+              <p className="text-sm text-gray-600">
+                Add a profile photo to build trust with potential roommates
               </p>
             </div>
-            
-            <div className="bg-blue-50 rounded-lg p-6">
-              <h3 className="font-semibold mb-4">Profile Summary</h3>
-              <div className="space-y-2 text-sm">
-                <p><span className="font-medium">Age:</span> {formData.age || 'Not specified'}</p>
-                <p><span className="font-medium">Occupation:</span> {formData.occupation || 'Not specified'}</p>
-                <p><span className="font-medium">Budget:</span> {formData.budget || 'Not specified'}</p>
-                <p><span className="font-medium">Location:</span> {formData.location || 'Not specified'}</p>
-                <p><span className="font-medium">Room Type:</span> {formData.roomType || 'Not specified'}</p>
+          </div>
+        );
+
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-3">
+                <Label>Amenities Available in the House</Label>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { id: 'runningWater', label: 'Running Water' },
+                    { id: 'electricity', label: 'Electricity' },
+                    { id: 'solarInverter', label: 'Solar Inverter' },
+                    { id: 'swimmingPool', label: 'Swimming Pool' },
+                    { id: 'washer', label: 'Washer' },
+                    { id: 'kitchenCupboard', label: 'Kitchen Cupboard' },
+                  ].map(({ id, label }) => (
+                    <Checkbox
+                      key={id}
+                      id={id}
+                      checked={formData.amenities[id as keyof typeof formData.amenities]}
+                      onChange={(e) => handleAmenityChange(id, e.target.checked)}
+                    >
+                      {label}
+                    </Checkbox>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="houseDescription">Describe Your Room</Label>
+                <Textarea
+                  id="houseDescription"
+                  placeholder="Enter room description"
+                  value={formData.houseDescription}
+                  onChange={(e) => handleChange('houseDescription', e.target.value)}
+                />
               </div>
             </div>
           </div>
         );
-        
+
       default:
         return null;
     }
   };
 
+  const stepTitles = [
+    'Personal Info',
+    'Neighborhood Info',
+    'Lifestyle Info',
+    'Profile Image Upload',
+    'Room Description and Amenities',
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center space-x-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <Home className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-3xl font-bold text-gray-900">Arhibu</span>
-          </div>
+    <div className="flex min-h-[90vh]">
+      {/* Left Sidebar */}
+      <div className="flex flex-col items-center justify-center w-56 p-4 border-r border-gray-200">
+        <div className="mb-10">
+          <Home className="mx-auto h-8 w-8 text-primary" />
+          <h1 className="mt-2 font-bold text-lg text-center text-primary">Arhibu</h1>
+          <p className="text-xs text-gray-500 text-center mt-1">Onboarding</p>
         </div>
 
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">Step {currentStep} of 4</span>
-            <span className="text-sm text-gray-600">{Math.round((currentStep / 4) * 100)}% Complete</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(currentStep / 4) * 100}%` }}
-            />
-          </div>
-        </div>
-
-        <Card className="shadow-lg">
-          <CardContent className="p-8">
-            {renderStep()}
-            
-            <div className="flex justify-between pt-8">
-              <Button
-                variant="outline"
-                onClick={prevStep}
-                disabled={currentStep === 1}
-                className="flex items-center space-x-2"
+        <div className="flex flex-col space-y-10">
+          {stepTitles.map((title, index) => {
+            const step = index + 1;
+            const isActive = currentStep === step;
+            return (
+              <div
+                key={step}
+                className={`flex flex-col items-center cursor-pointer select-none ${
+                  isActive ? 'text-primary' : 'text-gray-400'
+                }`}
+                onClick={() => setCurrentStep(step)}
               >
-                <ChevronLeft className="w-4 h-4" />
-                <span>Previous</span>
-              </Button>
-              
-              {currentStep < 4 ? (
-                <Button
-                  onClick={nextStep}
-                  className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"
+                <div
+                  className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                    isActive ? 'border-primary bg-primary text-white' : 'border-gray-300'
+                  }`}
                 >
-                  <span>Next</span>
-                  <ChevronRight className="w-4 h-4" />
+                  {step}
+                </div>
+                <div className="text-xs mt-1 text-center">{title}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 p-8">
+        <Card>
+          <CardContent className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-800">
+              {stepTitles[currentStep - 1]}
+            </h2>
+            {renderStep()}
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between pt-4">
+              {currentStep > 1 && (
+                <Button variant="outline" onClick={prevStep}>
+                  Back
                 </Button>
+              )}
+              {currentStep < 5 ? (
+                <Button onClick={nextStep}>Continue</Button>
               ) : (
-                <Button
-                  onClick={handleSubmit}
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  Complete Profile
-                </Button>
+                <Button onClick={handleSubmit}>Submit</Button>
               )}
             </div>
           </CardContent>
