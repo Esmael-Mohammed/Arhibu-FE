@@ -73,7 +73,7 @@ const ProfileDetailModal = ({ isOpen, onClose, profile }: ProfileDetailModalProp
                   <Home className="w-4 h-4 text-gray-400 mr-3" />
                   <span className="text-sm text-gray-600">Budget</span>
                 </div>
-                <span className="text-sm font-medium">₦80,000/month</span>
+                <span className="text-sm font-medium">30,000 Birr/month</span>
               </div>
             </div>
 

@@ -28,7 +28,7 @@ const Listings = () => {
     {
       id: 1,
       title: 'Rebecca Oyelami',
-      location: 'lagos',
+      location: 'Bole',
       match: 80,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
@@ -36,7 +36,7 @@ const Listings = () => {
     {
       id: 2,
       title: 'Tom Johnson',
-      location: 'abuja',
+      location: 'Saris',
       match: 75,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
@@ -44,7 +44,7 @@ const Listings = () => {
     {
       id: 3,
       title: 'Jane Doe',
-      location: 'port-harcourt',
+      location: 'Megenaga',
       match: 90,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: true,
@@ -52,7 +52,7 @@ const Listings = () => {
     {
       id: 4,
       title: 'Ali Musa',
-      location: 'lagos',
+      location: 'Kolfe',
       match: 85,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
