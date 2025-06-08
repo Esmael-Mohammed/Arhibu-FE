@@ -16,6 +16,8 @@ const Listings = () => {
     id: number;
     title: string;
     location: string;
+    gender: string;
+    budget: string;
     match: number;
     image: string;
     liked: boolean;
@@ -29,6 +31,8 @@ const Listings = () => {
       id: 1,
       title: 'Rebecca Oyelami',
       location: 'Bole',
+      gender: 'female',
+      budget: '5000-10000',
       match: 80,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
@@ -37,6 +41,8 @@ const Listings = () => {
       id: 2,
       title: 'Tom Johnson',
       location: 'Saris',
+      gender: 'male',
+      budget: '0-5000',
       match: 75,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
@@ -45,6 +51,8 @@ const Listings = () => {
       id: 3,
       title: 'Jane Doe',
       location: 'Megenaga',
+      gender: 'female',
+      budget: '10000-15000',
       match: 90,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: true,
@@ -53,6 +61,8 @@ const Listings = () => {
       id: 4,
       title: 'Ali Musa',
       location: 'Kolfe',
+      gender: 'male',
+      budget: '5000-10000',
       match: 85,
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
@@ -82,9 +92,18 @@ const Listings = () => {
   };
 
   const filteredListings = listings.filter((listing) => {
-    const locationMatch = filters.location ? listing.location === filters.location : true;
-    const genderMatch = true; // Placeholder: add gender logic if needed
-    const budgetMatch = true; // Placeholder: add budget logic if needed
+    const locationMatch = filters.location
+      ? listing.location.toLowerCase() === filters.location.toLowerCase()
+      : true;
+
+    const genderMatch = filters.gender
+      ? listing.gender.toLowerCase() === filters.gender.toLowerCase()
+      : true;
+
+    const budgetMatch = filters.budget
+      ? listing.budget === filters.budget
+      : true;
+
     return locationMatch && genderMatch && budgetMatch;
   });
 
@@ -123,9 +142,11 @@ const Listings = () => {
                 placeholder="Location"
                 className="w-32"
               >
-                <option value="bole">Bole</option>
-                <option value="saris">Saris</option>
-                <option value="kolfie">Kolfe Keranio</option>
+                <option value="">All Locations</option>
+                <option value="Bole">Bole</option>
+                <option value="Saris">Saris</option>
+                <option value="Kolfe">Kolfe</option>
+                <option value="Megenaga">Megenaga</option>
               </Select>
 
               <Select
@@ -134,6 +155,7 @@ const Listings = () => {
                 placeholder="Gender"
                 className="w-32"
               >
+                <option value="">All Genders</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </Select>
@@ -144,6 +166,7 @@ const Listings = () => {
                 placeholder="Budget"
                 className="w-32"
               >
+                <option value="">All Budgets</option>
                 <option value="0-5000">0 - 5k Birr</option>
                 <option value="5000-10000">5k - 10k Birr</option>
                 <option value="10000-15000">10k - 15k Birr</option>
@@ -190,7 +213,8 @@ const Listings = () => {
 
               <CardContent className="p-4">
                 <h3 className="font-medium text-gray-900 mb-1">{listing.title}</h3>
-                <p className="text-sm text-gray-600 mb-4 capitalize">{listing.location}</p>
+                <p className="text-sm text-gray-600 mb-1 capitalize">{listing.location}</p>
+                <p className="text-sm text-gray-500 mb-4 capitalize">{listing.gender} • {listing.budget} Birr</p>
 
                 <div className="flex items-center justify-between">
                   <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
