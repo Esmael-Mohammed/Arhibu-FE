@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import Button from '../../components/ui/button';
-// import { Input } from '../../components/ui/input';
-// import { Label } from '../../components/ui/label';
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Home, Eye, EyeOff } from 'lucide-react';
-// import { useToast } from '../../hooks/use-toast';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { auth } from '@/util/firebase';
@@ -13,7 +8,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/Lable';
 import { Input } from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
-// import { auth } from '../../utils/firebase';
 
 const Login = () => {
   const [email, setEmail] = useState('');

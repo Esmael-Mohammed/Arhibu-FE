@@ -1,4 +1,3 @@
-
 import { X, Heart, MessageCircle, Phone, MapPin, Calendar, Users, Home } from 'lucide-react';
 import Button from './ui/Button';
 import { Dialog, DialogContent } from './ui/Dialog';

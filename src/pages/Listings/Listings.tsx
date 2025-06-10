@@ -18,7 +18,7 @@ const Listings = () => {
     location: string;
     gender: string;
     budget: string;
-    match: number;
+    rate: number; 
     image: string;
     liked: boolean;
   };
@@ -32,8 +32,8 @@ const Listings = () => {
       title: 'Rebecca Oyelami',
       location: 'Bole',
       gender: 'female',
-      budget: '5000-10000',
-      match: 80,
+      budget: '10000',
+      rate: 5, 
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
     },
@@ -42,8 +42,8 @@ const Listings = () => {
       title: 'Tom Johnson',
       location: 'Saris',
       gender: 'male',
-      budget: '0-5000',
-      match: 75,
+      budget: '5000',
+      rate: 5, 
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
     },
@@ -52,8 +52,8 @@ const Listings = () => {
       title: 'Jane Doe',
       location: 'Megenaga',
       gender: 'female',
-      budget: '10000-15000',
-      match: 90,
+      budget: '15000',
+      rate: 4.5, 
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: true,
     },
@@ -62,8 +62,8 @@ const Listings = () => {
       title: 'Ali Musa',
       location: 'Kolfe',
       gender: 'male',
-      budget: '5000-10000',
-      match: 85,
+      budget: '10000',
+      rate: 4, 
       image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop',
       liked: false,
     },
@@ -207,7 +207,7 @@ const Listings = () => {
                   />
                 </button>
                 <div className="absolute bottom-3 left-3 bg-white rounded px-2 py-1 shadow-md">
-                  <span className="text-sm font-medium text-gray-700">{listing.match}%</span>
+                  <span className="text-sm font-medium text-gray-700">{listing.rate}</span>
                 </div>
               </div>
 
@@ -218,7 +218,7 @@ const Listings = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                    <span className="text-orange-600 text-xs font-medium">{listing.match}%</span>
+                    <span className="text-orange-600 text-xs font-medium">{listing.rate}</span>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -253,7 +253,10 @@ const Listings = () => {
         <ProfileDetailModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          profile={selectedProfile}
+          profile={{
+            ...selectedProfile,
+            match: selectedProfile.rate, // Map 'rate' to 'match'
+          }}
         />
       )}
     </div>
