@@ -5,8 +5,6 @@ import { useAuth } from '@/components/context/AuthContext';
 import { Button, Card, CardHeader } from 'react-bootstrap';
 import { CardContent, CardDescription, CardTitle } from '@/components/ui/Card';
 import { Edit, Heart, Home, MapPin, MessageCircle, Settings } from 'lucide-react';
-// If you have a Badge component in your UI library, import it here, e.g.:
-// import { Badge } from '@/components/ui/Badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import Badge from '@/components/ui/Badge';
 
@@ -212,7 +210,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Location:</span>
-                    <span className="font-medium">Seattle</span>
+                    <span className="font-medium">Bole</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Move-in:</span>
